@@ -1,6 +1,4 @@
-/**
- * 要备份状态的对象
- */
+//要备份状态的对象
 class MemoPattern {
     private String mWhatToDO;
     private MyMemo mMemo;
@@ -17,24 +15,18 @@ class MemoPattern {
         return mWhatToDO;
     }
 
-    /**
-     * 使用当前状态创建memo
-     */
+    //使用当前状态创建memo
     public MyMemo createMemo() {
         return new MyMemo(mWhatToDO);
     }
 
-    /**
-     * 使用memo恢复状态
-     */
+    //使用memo恢复状态
     public void restore(MyMemo memo) {
         mWhatToDO = memo.getmWhatToDo();
     }
 }
 
-/**
- * 备忘录
- */
+//备忘录，用于存储状态
 class MyMemo {
     private String mWhatToDo;
 

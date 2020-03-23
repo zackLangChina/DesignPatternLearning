@@ -4,11 +4,11 @@ import java.util.List;
 //通知者
 class ObserverPattern {
     private List<IObserver> mObservers = new ArrayList<>();
-
+    //加入观察者
     public void addObserver(IObserver observer) {
         mObservers.add(observer);
     }
-
+    //通知[所有]观察者
     public void notifyObserver() {
         for (IObserver ob : mObservers) {
             ob.callback();

@@ -3,8 +3,12 @@ public class Main {
     public static void main(final String[] args) {
         //单例模式
         System.out.println("~~~~~单例模式~~~~~");
+        //创建实例时，构造函数会有打印
         SinglePatternHunger singleHunger = SinglePatternHunger.getInstance();
         SinglePatternLazy singleLazy = SinglePatternLazy.getInstance();
+        //下面获取的是和上面同样的实例，所以不会有新的打印
+        SinglePatternHunger singleHunger2 = SinglePatternHunger.getInstance();
+        SinglePatternLazy singleLazy2 = SinglePatternLazy.getInstance();
 
         //工厂模式
         System.out.println("~~~~~工厂模式~~~~~");
@@ -40,5 +44,13 @@ public class Main {
         System.out.println("~~~~~模板模式~~~~~");
         TempClass tempClass = new TempClass();
         tempClass.templateMethod();
+
+        //中介模式
+        System.out.println("~~~~~中介模式~~~~~");
+        MyMediator mediator = new MyMediator();
+        IService service = new MyService();
+        mediator.regist(service);
+        MyClient client = new MyClient(mediator);
+        client.invokeService();
     }
 }

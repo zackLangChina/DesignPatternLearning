@@ -1,6 +1,4 @@
-/**
- * 策略模式 便于改变具体使用的算法，而不需要客户端修改代码
- */
+//策略类
 public class StrategyPattern {
     private Denoising curDenoiseStrategy = new NiubiDenoising();
 
@@ -9,11 +7,11 @@ public class StrategyPattern {
         curDenoiseStrategy.doDenoise();
     }
 }
-
+//算法接口
 interface Denoising {
     void doDenoise();
 }
-
+//具体算法
 class NiubiDenoising implements Denoising {
 
     @Override
