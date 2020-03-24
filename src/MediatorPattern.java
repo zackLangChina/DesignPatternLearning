@@ -4,46 +4,55 @@ import java.util.Map;
 //中介者
 class MyMediator {
     private Map<String,IService> mServiceList = new HashMap<String,IService>();
-
-    public void regist(IService service) {
-        mServiceList.put(service.getServiceName(),service);
+    //加入同事类
+    public void addService(String name, IService service) {
+        mServiceList.put(name,service);
     }
-
-    public IService getService(String serviceName) {
-        return (IService)mServiceList.get(serviceName);
+    //中介调用
+    public void invokeService(String name) {
+        mServiceList.get(name).receiveCall();
     }
 }
-//模仿Android中的服务所定义的接口
+//同事类，模仿服务之间相互调用
 interface IService {
-    public String getServiceName();
-    public void printServiceName();
+    void callService(String name);
+    void receiveCall();
 }
-//模仿Android中的服务
-class MyService implements IService {
-    private final String MY_SERVICE_NAME = "MyService";
-
-    @Override
-    public String getServiceName() {
-        return MY_SERVICE_NAME;
-    }
-
-    @Override
-    public void printServiceName() {
-        System.out.println("You invoke " + MY_SERVICE_NAME);
-    }
-}
-//模仿Android中调用服务的客户端
-//只需要知道服务名就能通过中介者调用服务，不需要耦合具体对象
-class MyClient {
+//同事类A,可以调用其他同事类，但不需要耦合其他同事类
+class ServiceA implements IService {
     private MyMediator mMediator;
-    private final String MY_SERVICE_NAME = "MyService";
 
-    public MyClient(MyMediator mediator) {
-        this.mMediator = mediator;
+    public ServiceA(MyMediator mMediator) {
+        this.mMediator = mMediator;
     }
 
-    public void invokeService() {
-        IService service = mMediator.getService(MY_SERVICE_NAME);
-        service.printServiceName();
+    @Override
+    public void callService(String name) {
+        System.out.println("ServiceA callService:" + name);
+        mMediator.invokeService(name);
+    }
+
+    @Override
+    public void receiveCall() {
+        System.out.println("ServiceA invoked");
+    }
+}
+//同事类B,可以调用其他同事类，但不需要耦合其他同事类
+class ServiceB implements IService {
+    private MyMediator mMediator;
+
+    public ServiceB(MyMediator mMediator) {
+        this.mMediator = mMediator;
+    }
+
+    @Override
+    public void callService(String name) {
+        System.out.println("ServiceB callService:" + name);
+        mMediator.invokeService(name);
+    }
+
+    @Override
+    public void receiveCall() {
+        System.out.println("ServiceB invoked");
     }
 }

@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Main {
 
     public static void main(final String[] args) {
@@ -48,9 +50,33 @@ public class Main {
         //中介模式
         System.out.println("~~~~~中介模式~~~~~");
         MyMediator mediator = new MyMediator();
-        IService service = new MyService();
-        mediator.regist(service);
-        MyClient client = new MyClient(mediator);
-        client.invokeService();
+        ServiceA serviceA = new ServiceA(mediator);
+        ServiceB serviceB = new ServiceB(mediator);
+        mediator.addService("ServiceA",serviceA);
+        mediator.addService("ServiceB",serviceB);
+        serviceA.callService("ServiceB");
+        serviceB.callService("ServiceA");
+
+
+        //代理模式
+        System.out.println("~~~~~代理模式~~~~~");
+        ProxyService proxyService = new ProxyService();
+        IProxyService proxy = ProxyServiceManager.getInstance().getService(proxyService.SERVICE_NAME_PROXYSERVICE);
+        proxy.doSomething();
+
+        //适配器模式
+        System.out.println("~~~~~适配器模式~~~~~");
+        int[] sugers = {4,5};int[] eggs = {1,9};
+        CakeAdapter adapter = new CakeAdapter(sugers,eggs);
+        List<Cake> cakes =  adapter.productCake();
+
+        //装饰模式
+        System.out.println("~~~~~装饰模式~~~~~");
+        Sword woodSword = new WoodSword();
+        Sword goldSword = new GoldSword();
+        SwordDecorator decorator = new SwordDecorator(woodSword);
+        decorator.showProperty();
+        decorator.attachBase(goldSword);
+        decorator.showProperty();
     }
 }
