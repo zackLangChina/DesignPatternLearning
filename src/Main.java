@@ -78,5 +78,34 @@ public class Main {
         decorator.showProperty();
         decorator.attachBase(goldSword);
         decorator.showProperty();
+
+        //享元模式
+        System.out.println("~~~~~享元模式~~~~~");
+        Library lib = new Library();
+        Book mathBook1 = lib.borrowBook(MathBook.class);
+        Book comicBook1 = lib.borrowBook(ComicBook.class);
+        lib.returnBook(mathBook1);
+        lib.returnBook(comicBook1);
+        //这时书池中已经有这两本书了，再借就不会触发构造函数
+        Book mathBook2 = lib.borrowBook(MathBook.class);
+        Book comicBook2 = lib.borrowBook(ComicBook.class);
+
+        //外观模式
+        System.out.println("~~~~~外观模式~~~~~");
+        Person person = new LiSi();
+        person.talk();
+        person.hear();
+        person.smell();
+
+        //桥接模式
+        System.out.println("~~~~~桥接模式~~~~~");
+        Color red = new Red();
+        Width bigPaint = new BigWidth();
+        Style fillStyle = new FillStyle();
+        Paint paint = new Paint(red,bigPaint,fillStyle);
+        paint.draw();
+        paint.setWidth(new LittleWidth());
+        paint.setColor(new Green());
+        paint.draw();
     }
 }
