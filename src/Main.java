@@ -107,5 +107,20 @@ public class Main {
         paint.setWidth(new LittleWidth());
         paint.setColor(new Green());
         paint.draw();
+
+        //MVP模式
+        System.out.println("~~~~~MVP模式~~~~~");
+        //V
+        IView mvpView = new LoginView();
+        //M
+        ICheckModel checkModel = new UserCheckModel();
+        IDBModel dbModel = new DBModel();
+        IDataManager dataManager = new DataManager(dbModel,checkModel);
+        //P，P会关联V和M
+        IPresenter presenter = new MVPPresenter(dataManager);
+        presenter.onAttach(mvpView);
+        mvpView.attachPresenter(presenter);
+        //由View发起的调用 V -> P -> M -> P -> V
+        mvpView.clickLogin();
     }
 }
